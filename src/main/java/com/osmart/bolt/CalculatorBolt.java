@@ -7,8 +7,6 @@ import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
-import com.espertech.esper.client.EPServiceProviderManager;
-import com.osmart.event.MeasurementEvent;
 
 import java.util.Map;
 
@@ -23,9 +21,8 @@ public class CalculatorBolt implements IRichBolt {
     }
 
     public void execute(Tuple tuple) {
-        // generate and send new event from input
-        MeasurementEvent event = new MeasurementEvent(tuple.getLong(0), tuple.getInteger(1));
-        EPServiceProviderManager.getDefaultProvider().getEPRuntime().sendEvent(event);
+        // do calc work
+        // calc();
 
         // emit further to save in database
         collector.emit(tuple, new Values(tuple.getInteger(1)));
