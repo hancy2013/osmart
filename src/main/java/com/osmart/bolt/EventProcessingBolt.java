@@ -14,8 +14,13 @@ import java.util.Map;
 /**
  * @author Vadim Bobrov
  */
-public class EventProcessingBolt implements IRichBolt {
+public class EventProcessingBolt implements IRichBolt, UpdateListener {
     OutputCollector collector;
+
+    public void update(EventBean[] newEvents, EventBean[] oldEvents) {
+        EventBean event = newEvents[0];
+        System.out.println("avg=" + event.get("avg(measurement)"));
+    }
 
     public void prepare(Map conf, TopologyContext context, OutputCollector collector) {
         this.collector = collector;
@@ -24,13 +29,7 @@ public class EventProcessingBolt implements IRichBolt {
         EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider();
         String expression = "select avg(measurement) from com.osmart.event.MeasurementEvent.win:time(30 sec)";
         EPStatement statement = epService.getEPAdministrator().createEPL(expression);
-
-        statement.addListener(new UpdateListener() {
-            public void update(EventBean[] newEvents, EventBean[] oldEvents) {
-                EventBean event = newEvents[0];
-                System.out.println("avg=" + event.get("avg(measurement)"));
-            }
-        });
+        statement.addListener(this);
 
     }
 
