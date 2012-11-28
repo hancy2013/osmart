@@ -16,7 +16,6 @@ public class App {
 
     public static void main(String[] args) {
         TopologyBuilder builder = new TopologyBuilder();
-        //builder.setSpout("words", new TestWordSpout(), 10);
         builder.setSpout("measurements", new RandomMeasurementSpout(), 10);
 
         builder.setBolt("eventprocess", new EventProcessingBolt(), 3).shuffleGrouping("measurements");
