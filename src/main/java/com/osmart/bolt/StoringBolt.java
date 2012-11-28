@@ -22,7 +22,7 @@ public class StoringBolt implements IRichBolt {
 
     public void execute(Tuple tuple) {
         // emit further to save in database
-        collector.emit(tuple, new Values(tuple.getInteger(1)));
+        collector.emit(tuple, new Values(tuple.getDouble(4)));
         collector.ack(tuple);
     }
 

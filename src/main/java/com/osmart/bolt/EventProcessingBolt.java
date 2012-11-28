@@ -18,8 +18,11 @@ public class EventProcessingBolt implements IRichBolt, UpdateListener {
     OutputCollector collector;
 
     public void update(EventBean[] newEvents, EventBean[] oldEvents) {
-        EventBean event = newEvents[0];
-        System.out.println("avg=" + event.get("avg(measurement)"));
+        EventBean newEvent = newEvents == null ? null : newEvents[0];
+        EventBean oldEvent = oldEvents == null ? null : oldEvents[0];
+
+        // newEvent and oldEvent are MapEventBeans here
+        System.out.println("avg=" + newEvent.get("avg(measurement)"));
     }
 
     public void prepare(Map conf, TopologyContext context, OutputCollector collector) {
@@ -27,7 +30,12 @@ public class EventProcessingBolt implements IRichBolt, UpdateListener {
 
         ////////////////////////////////
         EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider();
-        String expression = "select avg(measurement) from com.osmart.event.MeasurementEvent.win:time(30 sec)";
+
+        // receive a new and old average measurement every 20 sec
+        String expression =
+                "select avg(measurement) from " +
+                "com.osmart.event.MeasurementEvent.win:time_batch(7 sec)";
+
         EPStatement statement = epService.getEPAdministrator().createEPL(expression);
         statement.addListener(this);
 
@@ -35,7 +43,7 @@ public class EventProcessingBolt implements IRichBolt, UpdateListener {
 
     public void execute(Tuple tuple) {
         // generate and send new event from input
-        MeasurementEvent event = new MeasurementEvent(tuple.getLong(0), tuple.getInteger(1));
+        MeasurementEvent event = new MeasurementEvent(tuple.getString(0), tuple.getString(1), tuple.getString(2), tuple.getLong(3), tuple.getDouble(4));
         EPServiceProviderManager.getDefaultProvider().getEPRuntime().sendEvent(event);
     }
 

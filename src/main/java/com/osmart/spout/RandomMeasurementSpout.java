@@ -16,8 +16,8 @@ import java.util.Random;
  */
 
 public class RandomMeasurementSpout extends BaseRichSpout {
-    SpoutOutputCollector collector;
-    Random rand;
+    private SpoutOutputCollector collector;
+    private Random rand;
 
 
     @Override
@@ -29,7 +29,7 @@ public class RandomMeasurementSpout extends BaseRichSpout {
     @Override
     public void nextTuple() {
         Utils.sleep(100);
-        collector.emit(new Values(System.currentTimeMillis(), rand.nextInt(1000)));
+        collector.emit(new Values("SnS","Framingham","HVAC", System.currentTimeMillis(), rand.nextDouble()));
     }
 
     @Override
@@ -42,7 +42,7 @@ public class RandomMeasurementSpout extends BaseRichSpout {
 
     @Override
     public void declareOutputFields(OutputFieldsDeclarer declarer) {
-        declarer.declare(new Fields("timestamp", "measurement"));
+        declarer.declare(new Fields("customer", "location", "circuit", "timestamp", "measurement"));
     }
 
 }
