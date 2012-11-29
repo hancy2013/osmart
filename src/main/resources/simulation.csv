@@ -1,0 +1,5 @@
+customer,location,circuit,timestamp,measurement
+a,a,a,1,5.5
+a,a,a,2,5.5
+a,a,a,3,5.5
+a,a,a,4,5.5

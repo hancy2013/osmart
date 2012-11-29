@@ -35,6 +35,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.espertech</groupId>
+            <artifactId>esperio-csv</artifactId>
+            <version>4.7.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-core</artifactId>
             <version>1.0.4</version>

@@ -3,21 +3,21 @@ package com.osmart.event;
 /**
  * @author Vadim Bobrov
  */
-public class SensorEvent {
+public class TestEvent {
     private String customer;
     private String location;
     private String circuit;
 
-    private long timestamp;
     private double measurement;
 
-    public SensorEvent(){}
+    public TestEvent(){
 
-    public SensorEvent(String customer, String location, String circuit, long timestamp, double measurement) {
+    }
+
+    public TestEvent(String customer, String location, String circuit, double measurement) {
         this.customer = customer;
         this.location = location;
         this.circuit = circuit;
-        this.timestamp = timestamp;
         this.measurement = measurement;
     }
 
@@ -31,10 +31,6 @@ public class SensorEvent {
 
     public String getCircuit() {
         return circuit;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
     }
 
     public double getMeasurement() {
@@ -51,10 +47,6 @@ public class SensorEvent {
 
     public void setCircuit(String circuit) {
         this.circuit = circuit;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
     }
 
     public void setMeasurement(double measurement) {
