@@ -3,7 +3,7 @@ package com.osmart.event;
 /**
  * @author Vadim Bobrov
  */
-public class MeasurementEvent {
+public class SensorEvent {
     private String customer;
     private String location;
     private String circuit;
@@ -11,7 +11,7 @@ public class MeasurementEvent {
     private long timestamp;
     private double measurement;
 
-    public MeasurementEvent(String customer, String location, String circuit, long timestamp, double measurement) {
+    public SensorEvent(String customer, String location, String circuit, long timestamp, double measurement) {
         this.customer = customer;
         this.location = location;
         this.circuit = circuit;
